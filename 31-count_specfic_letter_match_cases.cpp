@@ -2,8 +2,6 @@
 
 using namespace std;
 
-enum enMatchCase{Yes,No};
-
 char ReadChar(string msg)
 {
     char charInput;
@@ -16,36 +14,43 @@ string ReadString(string msg)
 {
     string stringInput;
     cout << msg;
-    getline(cin,stringInput);
+    getline(cin, stringInput);
     return stringInput;
 }
 
-
-
-short CountSpacificChar(string sentence,char wantedChar,enMatchCase isMatchCase=enMatchCase::No)
+short CountSpacificChar(string sentence, char wantedChar, bool CaseSensitive = true)
 {
     short counter;
-    for(char &i : sentence)
+    for (char &i : sentence)
     {
-            if ((i==tolower(wantedChar)||i==toupper(wantedChar))&&isMatchCase==enMatchCase::Yes)
+
+        if (CaseSensitive)
+        {
+            if (i == wantedChar)
             {
                 counter++;
-            }else if(i==wantedChar)
+            }
+        }
+        else
+        {
+            if (tolower(i) == tolower(wantedChar))
                 counter++;
+        }
     }
+
     return counter;
 }
 
 int main()
 {
-    string sentence=ReadString("Enter string to count \n>> ");
-    char letter=ReadChar("Enter your wanted character\n>>");
+    string sentence = ReadString("Enter string to count \n>> ");
+    char letter = ReadChar("Enter your wanted character\n>>");
 
-    short countWithoutMatch=CountSpacificChar(sentence,letter);
-    short countWithMatch=CountSpacificChar(sentence,letter,enMatchCase::Yes);
+    short countWithCaseSensitive = CountSpacificChar(sentence, letter);
+    short countWithoutCaseSensitive = CountSpacificChar(sentence, letter, false);
 
-    cout << "the letter '" << letter << "' has repeated [" << countWithoutMatch << "] times in this string.\n";
-    cout << "letters '" << char(tolower(letter)) << "' and '" << char(toupper(letter)) << "' have repeated [" << countWithMatch << "] times in this string.";
+    cout << "the letter '" << letter << "' has repeated [" << countWithCaseSensitive << "] times in this string.\n";
+    cout << "letters '" << char(tolower(letter)) << "' and '" << char(toupper(letter)) << "' have repeated [" << countWithoutCaseSensitive << "] times in this string.";
 
     return 0;
 }
