@@ -135,18 +135,12 @@ bool IsContinue(string msg,string passCase)
     cin.ignore();
     return ans == passCase;
 }
-void ClearFile(string fileName)
-{
-    fstream File;
-    File.open(fileName,ios::out);
-    File << "";
-    File.close();
-}
+
 void UpdateFileData(string fileName,vector<string> newData)
 {
     fstream File;
-    File.open(fileName,ios::app);
-    ClearFile(fileName);
+    File.open(fileName,ios::out);
+    
     for (string &line : newData)
     {
         File << line << endl;
